@@ -5,7 +5,7 @@ namespace Modules\Generator\Providers;
 use Illuminate\Support\Facades\Config;
 use Exception;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Database\Eloquent\Factory;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Modules\Generator\Console\API\APIControllerGeneratorCommand;
 use Modules\Generator\Console\API\APIRequestsGeneratorCommand;
 use Modules\Generator\Console\API\TestsGeneratorCommand;
