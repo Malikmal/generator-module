@@ -10,9 +10,9 @@
         }
     ],
     "require": {
-        "php": ">=7.0.0",
+        "php": ">=7.4",
         "nwidart/laravel-modules": "^8",
-        "infyomlabs/laravel-generator": "^8",
+        "infyomlabs/laravel-generator": "^8.0.x-dev",
         "infyomlabs/swagger-generator": "dev-master",
         "dsielab/core-templates": "dev-develop"
     },
