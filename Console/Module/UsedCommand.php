@@ -29,7 +29,7 @@ class UsedCommand extends NwidartUnUseCommand
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle() : int
     {
         $usedNow = $this->laravel['modules']->getUsedNow();
 
@@ -38,5 +38,7 @@ class UsedCommand extends NwidartUnUseCommand
         } else {
             $this->info("No module is being used now.");
         }
+
+        return 0;
     }
 }
