@@ -24,16 +24,17 @@ class ModuleMakeCommand extends NwidartModuleMakeCommand
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle() : int
     {
         $names = $this->argument('name');
 
         if (!$names) {
             $this->error('No module name(s) provided!');
         }
+        $success = true;
 
         foreach ($names as $name) {
-            with(new ModuleGenerator($name))
+            $code = with(new ModuleGenerator($name))
                 ->setFilesystem($this->laravel['files'])
                 ->setModule($this->laravel['modules'])
                 ->setConfig($this->laravel['config'])
@@ -41,7 +42,14 @@ class ModuleMakeCommand extends NwidartModuleMakeCommand
                 ->setConsole($this)
                 ->setForce($this->option('force'))
                 ->setPlain($this->option('plain'))
+                ->setActive(!$this->option('disabled'))
                 ->generate();
+
+            if ($code === E_ERROR) {
+                $success = false;
+            }
         }
+
+        return $success ? 0 : E_ERROR;
     }
 }
