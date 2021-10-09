@@ -94,7 +94,7 @@ class GeneratorConfig extends InfyOmGeneratorConfig
             $commandData->addDynamicVariable('$NAMESPACE_MODULE', $this->nsModule);
             // $commandData->addDynamicVariable('$MODULE_NAME$', Str::studly($commandData->commandObj->option('module')) ?: app('modules')->getUsedNow());
         }
-        $commandData->addDynamicVariable('$MODULE_NAME$', app('modules')->getUsedNow());
+        $commandData->addDynamicVariable('$MODULE_NAME$', strtolower(app('modules')->getUsedNow()));
 
         return parent::loadDynamicVariables($commandData);
     }
