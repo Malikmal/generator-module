@@ -17,6 +17,9 @@ class GeneratorConfig extends InfyOmGeneratorConfig
     /* Namespace variables */
     public $nsModule;
 
+    /* Module Name variables */
+    public $moduleName;
+    
     /* Path variables */
     public $pathModule;
 
@@ -44,14 +47,17 @@ class GeneratorConfig extends InfyOmGeneratorConfig
     public function init(CommandData &$commandData, $options = null)
     {
         // Getting module name option or active if exists
-        $moduleOption = Str::studly($commandData->commandObj->option('module')) ?: app('modules')->getUsedNow();
+        $this->moduleName = Str::studly($commandData->commandObj->option('module')) ?: app('modules')->getUsedNow();
 
         // If it is set and module exists do the stuff else show an error message
-        if (!empty($moduleOption)) {
-            if (app('modules')->has($moduleOption)) {
-                $this->changeConfig($moduleOption);
+        if (!empty($this->moduleName)) {
+            if (app('modules')->has($this->moduleName)) {
+                $this->prepareAddOns();
+                $this->changeConfig($this->moduleName);
+                // $this->loadNamespaces($commandData);
+                $this->loadDynamicVariables($commandData);
             } else {
-                $commandData->commandObj->error("Module [{$moduleOption}] does not exists.");
+                $commandData->commandObj->error("Module [{$this->moduleName}] does not exists.");
             }
         }
 
@@ -86,7 +92,9 @@ class GeneratorConfig extends InfyOmGeneratorConfig
     {
         if ($this->nsModule) {
             $commandData->addDynamicVariable('$NAMESPACE_MODULE', $this->nsModule);
+            // $commandData->addDynamicVariable('$MODULE_NAME$', Str::studly($commandData->commandObj->option('module')) ?: app('modules')->getUsedNow());
         }
+        $commandData->addDynamicVariable('$MODULE_NAME$', app('modules')->getUsedNow());
 
         return parent::loadDynamicVariables($commandData);
     }
@@ -152,4 +160,5 @@ class GeneratorConfig extends InfyOmGeneratorConfig
         $this->addOns['menu.enabled'] = config('modules.generator.add_on.menu.enabled', false);
         $this->addOns['menu.menu_file'] = config('modules.generator.add_on.menu.menu_file', 'layouts.menu');
     }
+
 }

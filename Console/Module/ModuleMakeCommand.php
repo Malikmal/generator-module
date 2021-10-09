@@ -41,7 +41,7 @@ class ModuleMakeCommand extends NwidartModuleMakeCommand
                 ->setActivator($this->laravel[ActivatorInterface::class])
                 ->setConsole($this)
                 ->setForce($this->option('force'))
-                ->setPlain($this->option('plain'))
+                // ->setPlain($this->option('plain'))
                 ->setActive(!$this->option('disabled'))
                 ->generate();
 
