@@ -38,6 +38,8 @@ trait PublishBaseCommandTrait
             throw $e;
         }
 
+        $this->commandData->addDynamicVariable('$MODULE_NAME$', strtolower($module));
+
         $this->commandData->config->changeConfig($module);
     }
 }
